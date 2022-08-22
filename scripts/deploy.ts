@@ -53,7 +53,6 @@ async function main() {
 
   console.log("as contract owner (API), finish the transaction");
   const completeAuctionBidAction = await marketplace.completeAuctionBid(FIRST_ACCOUNT_ADDRESS, SECOND_ACCOUNT_ADDRESS, auctionAmount, itemId);
-
 }
 
 async function getItemId(generateItemAction: any): Promise<String> {
