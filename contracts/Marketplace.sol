@@ -25,11 +25,9 @@ contract Marketplace is GameItem, Ownable {
     function auctionItem(uint256 initialAmount, uint256 itemId)
         _ensureItemExists(itemId)
         _ensureOwnerOf(msg.sender, itemId)
-        _ensureOwnerOf(marketplaceAddress, itemId)
+        _ensureApproved(msg.sender, marketplaceAddress)
         public
     {
-        //setApprovalForAll(marketplaceAddress, true);
-
         emit SellerAuctionAnItem(msg.sender, initialAmount, itemId);
     }
 
@@ -81,16 +79,21 @@ contract Marketplace is GameItem, Ownable {
     }
 
     modifier _ensureOwnerOf(address owner, uint256 itemId) {
-        require(owner == ownerOf(itemId), "Sender or Contract is not owner of item");
+        require(owner == ownerOf(itemId), "Sender not owner of item");
+        _;
+    }
+
+    modifier _ensureApproved(address owner, address operator) {
+        require(isApprovedForAll(owner, operator), "Contract is not approved");
         _;
     }
 
     modifier _ensurePayable(IERC20 token, uint256 amount) {
         uint256 balanceOwner = token.balanceOf(msg.sender);
-        uint256 balanceAllowed = token.allowance(msg.sender, marketplaceAddress);
+        uint256 balanceAllowedToContract = token.allowance(msg.sender, marketplaceAddress);
         
         require(balanceOwner >= amount, "Insufficiend funds to bought item");
-        require(balanceAllowed >= amount, "Insufficiend allowance to smart contract, increase them before continue");
+        require(balanceAllowedToContract >= amount, "Insufficiend allowance to smart contract, increase them before continue");
         _;
     }
 }
