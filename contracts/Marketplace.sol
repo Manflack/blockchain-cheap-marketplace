@@ -28,7 +28,7 @@ contract Marketplace is GameItem, Ownable {
         _ensureApproved(msg.sender, marketplaceAddress)
         public
     {
-        emit SellerAuctionAnItem(msg.sender, initialAmount, itemId);
+        emit AuctionAnItem(msg.sender, initialAmount, itemId);
     }
 
     function approveBidder(address buyer, uint256 amount, uint256 itemId)
@@ -44,7 +44,7 @@ contract Marketplace is GameItem, Ownable {
         public
     {
         // here the buyer "approved" an auction, offchain will listen event
-        emit BuyerBidAnItem(seller, msg.sender, amount, itemId);
+        emit BidAnItem(seller, msg.sender, amount, itemId);
     }
 
     //this function can be called by owner contract
@@ -62,8 +62,8 @@ contract Marketplace is GameItem, Ownable {
         emit AuctionFinished(seller, buyer, amount, itemId);
     }
 
-    event SellerAuctionAnItem(address seller, uint256 initialAmount, uint256 itemId);
-    event BuyerBidAnItem(address seller, address buyer, uint256 amount, uint256 itemId);
+    event AuctionAnItem(address seller, uint256 initialAmount, uint256 itemId);
+    event BidAnItem(address seller, address buyer, uint256 amount, uint256 itemId);
     event BidApproved(address seller, address buyer, uint256 amount, uint256 itemId);
     event AuctionFinished(address seller, address buyer, uint256 amount, uint256 itemId);
 
