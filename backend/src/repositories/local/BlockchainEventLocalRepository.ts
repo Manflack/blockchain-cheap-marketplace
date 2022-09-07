@@ -5,6 +5,15 @@ let DATABASE = new Map<string, BlockchainEvent[]>();
 
 export default class BlockchainEventLocalRepository implements BlockchainEventRepository {
 
+    private static instance: BlockchainEventLocalRepository;
+
+    public static getInstance(): BlockchainEventLocalRepository {
+        if(!BlockchainEventLocalRepository.instance) {
+            BlockchainEventLocalRepository.instance = new BlockchainEventLocalRepository();
+        }
+        return BlockchainEventLocalRepository.instance;
+    }
+
     public getTransactionsByEventType(eventType: string): BlockchainEvent[] | undefined {
         return DATABASE.get(eventType);
     }

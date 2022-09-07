@@ -1,6 +1,6 @@
 import BlockchainEvent from './BlockchainEvent'
 
-export default class BidApproved extends BlockchainEvent {
+export default class BidApprovedEvent extends BlockchainEvent {
     seller: string;
     buyer: string;
     amount: string;

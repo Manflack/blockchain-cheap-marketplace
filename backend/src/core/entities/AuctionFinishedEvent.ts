@@ -1,6 +1,6 @@
 import BlockchainEvent from './BlockchainEvent'
 
-export default class AuctionFinished extends BlockchainEvent {
+export default class AuctionFinishedEvent extends BlockchainEvent {
     seller: string;
     buyer: string;
     amount: string;
